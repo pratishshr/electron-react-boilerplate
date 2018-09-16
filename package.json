@@ -1,0 +1,78 @@
+{
+  "name": "electron-react-boilerplate",
+  "version": "0.1.0",
+  "main": "main/index.js",
+  "homepage": "./",
+  "repository": "https://github.com/pratishshr/electron-react-boilerplate",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "bootstrap": "3.3.7",
+    "dotenv": "^6.0.0",
+    "electron-debug": "^2.0.0",
+    "electron-is-dev": "^0.3.0",
+    "electron-log": "^2.2.17",
+    "node-sass-chokidar": "^1.2.0",
+    "npm-run-all": "^4.1.2",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": ["eslint --fix", "prettier --single-quote --print-width 120 --write \"src/**/*.{js,jsx}\"", "git add"]
+  },
+  "scripts": {
+    "start-js": "react-scripts start",
+    "electron": "electron .",
+    "start:electron": "run-p start && electron",
+    "build-js": "rm -rf web-build && react-scripts build && mv build web-build",
+    "build": "npm-run-all build-css build-js",
+    "start": "NODE_ENV=development run-p watch-css start-js",
+    "build-css": "node-sass-chokidar src/assets/sass/ -o src/assets/sass",
+    "package": "run-s build && electron-builder -p never",
+    "watch-css": "node-sass-chokidar src/assets/sass/ -o src/assets/sass --watch --recursive",
+    "precommit": "lint-staged",
+    "prestart": "run-s build-css",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "prettify": "prettier --single-quote --print-width 120 --write \"src/**/*.{js,jsx}\""
+  },
+  "contributors": ["pratishshr@gmail.com"],
+  "devDependencies": {
+    "electron": "^2.0.9",
+    "electron-builder": "^20.28.4",
+    "electron-devtools-installer": "^2.2.4",
+    "eslint": "^4.16.0",
+    "eslint-config-react-app": "^1.0.4",
+    "eslint-loader": "1.7.1",
+    "eslint-plugin-flowtype": "^2.42.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "5.0.3",
+    "eslint-plugin-react": "7.0.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^6.1.0",
+    "prettier": "^1.10.2"
+  },
+  "engines": {
+    "node": ">= 8.9.1",
+    "npm": ">= 5.5.1"
+  },
+  "build": {
+    "extends": null,
+    "appId": "com.starter.electron",
+    "mac": {
+      "category": "public.app-category.business",
+      "target": ["zip", "dmg"]
+    },
+    "win": {
+      "target": "nsis",
+      "artifactName": "${productName}-setup-${version}.${ext}"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"]
+    }
+  }
+}
